@@ -6,6 +6,7 @@ import history from "connect-history-api-fallback";
 import express from "express";
 import multer from "multer";
 import menuRoutes from "./routes/menu.js";
+import authRoutes from "./routes/auth.js";
 
 // Constructing __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +18,7 @@ const app = express();
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
@@ -45,6 +46,7 @@ app.use(multer({
 
 // Routes
 app.use(menuRoutes);
+app.use("/auth", authRoutes);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   console.log(error);
